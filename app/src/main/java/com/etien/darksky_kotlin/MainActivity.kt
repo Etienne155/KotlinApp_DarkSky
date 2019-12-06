@@ -7,26 +7,26 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
 
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
+import org.json.JSONObject
+import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +35,6 @@ class MainActivity : AppCompatActivity() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()
-
-        val time_Modes = resources.getStringArray(R.array.time_Modes)
-        val sharedPref: SharedPreferences = getSharedPreferences(Constants.TIME_MODES, Constants.PRIVATE_MODE)
-
-        Toast.makeText(this, sharedPref.getString(Constants.TIME_MODES, time_Modes[0]), Toast.LENGTH_SHORT).show()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -112,11 +107,25 @@ class MainActivity : AppCompatActivity() {
                     if (location == null) {
                         requestNewLocationData()
                     } else {
+                        var coords = GeoCoordinates(location.latitude, location.longitude)
 
-                        val lat = location.latitude.toString()
-                        val lng = location.longitude.toString()
+                        doAsync {
+                            val data = URL(Constants.URL_DARKSKY + coords.lat + "," + coords.lng).readText()
+                            val json = JSONObject(data)
 
-                        //Toast.makeText(this@MainActivity, "Latitude: " + lat + " Longitude: " + lng, Toast.LENGTH_SHORT).show()
+                            val sharedPref: SharedPreferences = getSharedPreferences(Constants.TIME_MODES, Constants.PRIVATE_MODE)
+                            val time_mode = sharedPref.getString(Constants.TIME_MODES, "")
+                            val time_Modes = resources.getStringArray(R.array.time_Modes)
+
+                            if(time_mode == time_Modes[0]) {
+                                GeoService.getMinutesData(json)
+                            } else if(time_mode == time_Modes[1]) {
+                                GeoService.getHoursData(json)
+                            } else if(time_mode == time_Modes[2]) {
+                                GeoService.getDaysData(json)
+                            }
+
+                        }
 
                     }
                 }
@@ -145,9 +154,6 @@ class MainActivity : AppCompatActivity() {
 
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
-            var mLastLocation: Location = locationResult.lastLocation
-            val lat = mLastLocation.latitude.toString()
-            val lng = mLastLocation.longitude.toString()
 
             Toast.makeText(this@MainActivity, "callback geolocalisation", Toast.LENGTH_SHORT).show()
         }
