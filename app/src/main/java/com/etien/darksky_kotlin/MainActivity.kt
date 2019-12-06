@@ -27,19 +27,51 @@ class MainActivity : AppCompatActivity() {
     val PERMISSION_ID = 42
     lateinit var mFusedLocationClient: FusedLocationProviderClient
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
         getLastLocation()
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        if (requestCode == PERMISSION_ID) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                // Granted. Start getting the location information
+            }
+        }
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.action_about -> {
+                val intent = Intent(this, AboutActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onBackPressed() {
+        finishAffinity()
+    }
+
+
+
+    /* Geolocalisation Utils Functions */
 
     private fun checkPermissions(): Boolean {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
@@ -55,14 +87,6 @@ class MainActivity : AppCompatActivity() {
             arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
             PERMISSION_ID
         )
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == PERMISSION_ID) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                // Granted. Start getting the location information
-            }
-        }
     }
 
     private fun isLocationEnabled(): Boolean {
@@ -83,7 +107,10 @@ class MainActivity : AppCompatActivity() {
                         requestNewLocationData()
                     } else {
 
-                        val loc = location.latitude.toString()
+                        val lat = location.latitude.toString()
+                        val lng = location.longitude.toString()
+
+                        Toast.makeText(this@MainActivity, "Latitude: " + lat + " Longitude: " + lng, Toast.LENGTH_SHORT).show()
 
                     }
                 }
@@ -114,38 +141,9 @@ class MainActivity : AppCompatActivity() {
         override fun onLocationResult(locationResult: LocationResult) {
             var mLastLocation: Location = locationResult.lastLocation
             val lat = mLastLocation.latitude.toString()
+            val lng = mLastLocation.longitude.toString()
+
+            Toast.makeText(this@MainActivity, "callback geolocalisation", Toast.LENGTH_SHORT).show()
         }
-    }
-
-
-
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> {
-                val intent = Intent(this, SettingsActivity::class.java)
-                startActivity(intent)
-                return true
-            }
-            R.id.action_about -> {
-                val intent = Intent(this, AboutActivity::class.java)
-                startActivity(intent)
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onBackPressed() {
-        finishAffinity()
     }
 }
