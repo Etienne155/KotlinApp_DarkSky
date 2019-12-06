@@ -1,9 +1,10 @@
 package com.etien.darksky_kotlin.DataModels
 
-class OneMinuteData(time: Double?, precipIntensity: Double?, precipIntensityError: Double?, precipProbability: Double?, precipType: String?) {
+class OneHourData(time: Double?, summary: String?, icon: String?, precipIntensity: Double?, precipProbability: Double?, precipType: String?) {
     var time: Double? = time
+    var summary: String? = summary
+    var icon: String? = icon
     var precipIntensity: Double? = precipIntensity
-    var precipIntensityError: Double? = precipIntensityError
     var precipProbability: Double? = precipProbability
     var precipType: String? = precipType
 }
