@@ -1,4 +1,4 @@
-package com.etien.darksky_kotlin
+package com.etien.darksky_kotlin.Activity
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,7 +10,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
+import com.etien.darksky_kotlin.Constants
+import com.etien.darksky_kotlin.R
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -19,7 +20,10 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        val sharedPref: SharedPreferences = getSharedPreferences(Constants.TIME_MODES, Constants.PRIVATE_MODE)
+        val sharedPref: SharedPreferences = getSharedPreferences(
+            Constants.TIME_MODES,
+            Constants.PRIVATE_MODE
+        )
 
         val time_Modes = resources.getStringArray(R.array.time_Modes)
         val spinner = findViewById<Spinner>(R.id.spinnerSettings)

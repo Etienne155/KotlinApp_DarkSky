@@ -1,10 +1,11 @@
-package com.etien.darksky_kotlin
+package com.etien.darksky_kotlin.Activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.etien.darksky_kotlin.R
 
 class AboutActivity : AppCompatActivity() {
 

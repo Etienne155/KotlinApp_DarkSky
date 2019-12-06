@@ -1,4 +1,4 @@
-package com.etien.darksky_kotlin
+package com.etien.darksky_kotlin.Activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -8,15 +8,16 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import com.etien.darksky_kotlin.*
+import com.etien.darksky_kotlin.R
+import com.etien.darksky_kotlin.Service.GeoService
 import com.google.android.gms.location.*
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -107,13 +108,19 @@ class MainActivity : AppCompatActivity() {
                     if (location == null) {
                         requestNewLocationData()
                     } else {
-                        var coords = GeoCoordinates(location.latitude, location.longitude)
+                        var coords = GeoCoordinates(
+                            location.latitude,
+                            location.longitude
+                        )
 
                         doAsync {
                             val data = URL(Constants.URL_DARKSKY + coords.lat + "," + coords.lng).readText()
                             val json = JSONObject(data)
 
-                            val sharedPref: SharedPreferences = getSharedPreferences(Constants.TIME_MODES, Constants.PRIVATE_MODE)
+                            val sharedPref: SharedPreferences = getSharedPreferences(
+                                Constants.TIME_MODES,
+                                Constants.PRIVATE_MODE
+                            )
                             val time_mode = sharedPref.getString(Constants.TIME_MODES, "")
                             val time_Modes = resources.getStringArray(R.array.time_Modes)
 

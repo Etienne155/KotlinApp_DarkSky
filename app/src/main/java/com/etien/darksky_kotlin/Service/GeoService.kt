@@ -1,4 +1,4 @@
-package com.etien.darksky_kotlin
+package com.etien.darksky_kotlin.Service
 
 import org.json.JSONObject
 
