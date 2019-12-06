@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -24,8 +25,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    val PERMISSION_ID = 42
     lateinit var mFusedLocationClient: FusedLocationProviderClient
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +35,15 @@ class MainActivity : AppCompatActivity() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()
+
+        val time_Modes = resources.getStringArray(R.array.time_Modes)
+        val sharedPref: SharedPreferences = getSharedPreferences(Constants.TIME_MODES, Constants.PRIVATE_MODE)
+
+        Toast.makeText(this, sharedPref.getString(Constants.TIME_MODES, time_Modes[0]), Toast.LENGTH_SHORT).show()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == PERMISSION_ID) {
+        if (requestCode == Constants.PERMISSION_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 // Granted. Start getting the location information
             }
@@ -85,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(
             this,
             arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
-            PERMISSION_ID
+            Constants.PERMISSION_ID
         )
     }
 
@@ -110,7 +116,7 @@ class MainActivity : AppCompatActivity() {
                         val lat = location.latitude.toString()
                         val lng = location.longitude.toString()
 
-                        Toast.makeText(this@MainActivity, "Latitude: " + lat + " Longitude: " + lng, Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this@MainActivity, "Latitude: " + lat + " Longitude: " + lng, Toast.LENGTH_SHORT).show()
 
                     }
                 }
