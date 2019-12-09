@@ -26,9 +26,12 @@ class SettingsActivity : AppCompatActivity() {
         )
 
         val time_Modes = resources.getStringArray(R.array.time_Modes)
+        val current_time_mode = sharedPref.getString(Constants.TIME_MODES, time_Modes[0])
+
         val spinner = findViewById<Spinner>(R.id.spinnerSettings)
 
         if (spinner != null) {
+
             val adapter = ArrayAdapter(
                 this,
                 android.R.layout.simple_spinner_item, time_Modes
@@ -48,6 +51,16 @@ class SettingsActivity : AppCompatActivity() {
 
                 }
             }
+            /* TODO */
+
+            if(current_time_mode == time_Modes[0]) {
+                spinner.setSelection(0)
+            } else if(current_time_mode == time_Modes[1]) {
+                spinner.setSelection(1)
+            } else if(current_time_mode == time_Modes[2]) {
+                spinner.setSelection(2)
+            }
+
         }
 
     }

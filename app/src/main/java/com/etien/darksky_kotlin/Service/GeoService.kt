@@ -1,7 +1,6 @@
 package com.etien.darksky_kotlin.Service
 
-import com.etien.darksky_kotlin.DataModels.AllMinuteData
-import com.etien.darksky_kotlin.DataModels.OneMinuteData
+import com.etien.darksky_kotlin.DataModels.*
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -21,7 +20,7 @@ class GeoService {
 
             val data: JSONArray = minutely.getJSONArray("data")
             for(x in 0..25) {
-                val item: JSONObject = data.getJSONObject(0)
+                val item: JSONObject = data.getJSONObject(x)
                 val time: Double = item.getDouble("time")
 
                 var precipIntensity: Double = 0.0
@@ -59,12 +58,120 @@ class GeoService {
             return allMinuteData
         }
 
-        fun getHoursData(json: JSONObject) {
+        fun getHoursData(json: JSONObject): AllHourData {
+            var allHourData: AllHourData = AllHourData(null, null, null)
 
+            val hourly: JSONObject = json.getJSONObject("hourly")
+            val summary: String = hourly.get("summary").toString()
+            val icon: String = hourly.get("icon").toString()
+
+            allHourData.summary = summary
+            allHourData.icon = icon
+
+            var hourList: MutableList<OneHourData> = mutableListOf<OneHourData>()
+
+            val data: JSONArray = hourly.getJSONArray("data")
+            for(x in 0..25) {
+                val item: JSONObject = data.getJSONObject(x)
+                val time: Double = item.getDouble("time")
+
+                var summary: String = ""
+                if(item.has("summary")) {
+                    summary = item.getString("summary")
+                }
+
+                var icon: String = ""
+                if(item.has("icon")) {
+                    icon = item.getString("icon")
+                }
+
+                var precipIntensity: Double = 0.0
+                if(item.has("precipIntensity")) {
+                    precipIntensity = item.getDouble("precipIntensity")
+                }
+
+                var precipProbability: Double = 0.0
+                if(item.has("precipProbability")) {
+                    precipProbability = item.getDouble("precipProbability")
+                }
+
+                var precipType: String = ""
+                if(item.has("precipType")) {
+                    precipType = item.getString("precipType")
+                }
+
+                var oneHourData: OneHourData = OneHourData(
+                    time,
+                    summary,
+                    icon,
+                    precipIntensity,
+                    precipProbability,
+                    precipType)
+
+                hourList.add(oneHourData)
+            }
+
+            allHourData.hourList = hourList
+
+            return allHourData
         }
 
-        fun getDaysData(json: JSONObject) {
+        fun getDaysData(json: JSONObject): AllDayData {
+            var allDayData: AllDayData = AllDayData(null, null, null)
 
+            val daily: JSONObject = json.getJSONObject("daily")
+            val summary: String = daily.get("summary").toString()
+            val icon: String = daily.get("icon").toString()
+
+            allDayData.summary = summary
+            allDayData.icon = icon
+
+            var dayList: MutableList<OneDayData> = mutableListOf<OneDayData>()
+
+            val data: JSONArray = daily.getJSONArray("data")
+            for(x in 0..7) {
+                val item: JSONObject = data.getJSONObject(x)
+                val time: Double = item.getDouble("time")
+
+                var summary: String = ""
+                if(item.has("summary")) {
+                    summary = item.getString("summary")
+                }
+
+                var icon: String = ""
+                if(item.has("icon")) {
+                    icon = item.getString("icon")
+                }
+
+                var precipIntensity: Double = 0.0
+                if(item.has("precipIntensity")) {
+                    precipIntensity = item.getDouble("precipIntensity")
+                }
+
+                var precipProbability: Double = 0.0
+                if(item.has("precipProbability")) {
+                    precipProbability = item.getDouble("precipProbability")
+                }
+
+                var precipType: String = ""
+                if(item.has("precipType")) {
+                    precipType = item.getString("precipType")
+                }
+
+                var oneDayData: OneDayData = OneDayData(
+                    time,
+                    summary,
+                    icon,
+                    precipIntensity,
+                    precipProbability,
+                    precipType)
+
+                dayList.add(oneDayData)
+            }
+
+            allDayData.dayList = dayList
+
+            return allDayData
         }
     }
 }

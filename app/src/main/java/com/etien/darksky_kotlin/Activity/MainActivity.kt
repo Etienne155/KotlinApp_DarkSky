@@ -16,6 +16,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.etien.darksky_kotlin.*
+import com.etien.darksky_kotlin.DataModels.GeoCoordinates
 import com.etien.darksky_kotlin.R
 import com.etien.darksky_kotlin.Service.GeoService
 import com.google.android.gms.location.*
@@ -121,8 +122,9 @@ class MainActivity : AppCompatActivity() {
                                 Constants.TIME_MODES,
                                 Constants.PRIVATE_MODE
                             )
-                            val time_mode = sharedPref.getString(Constants.TIME_MODES, "")
                             val time_Modes = resources.getStringArray(R.array.time_Modes)
+
+                            val time_mode = sharedPref.getString(Constants.TIME_MODES, time_Modes[0])
 
                             if(time_mode == time_Modes[0]) {
                                 GeoService.getMinutesData(json)
