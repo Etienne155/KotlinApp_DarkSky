@@ -4,10 +4,14 @@
       android:orientation="vertical">
 
     <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="65dp"
-            android:id="@+id/main_summary"/>
+            android:layout_marginBottom="12dp"
+            android:id="@+id/main_summary"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
