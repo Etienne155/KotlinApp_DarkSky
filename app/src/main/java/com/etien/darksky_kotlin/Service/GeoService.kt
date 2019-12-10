@@ -7,7 +7,7 @@ import org.json.JSONObject
 class GeoService {
     companion object {
         fun getMinutesData(json: JSONObject): AllMinuteData {
-            var allMinuteData: AllMinuteData = AllMinuteData(null, null, null)
+            var allMinuteData: AllMinuteData = AllMinuteData()
 
             val minutely: JSONObject = json.getJSONObject("minutely")
             val summary: String = minutely.get("summary").toString()
@@ -59,7 +59,7 @@ class GeoService {
         }
 
         fun getHoursData(json: JSONObject): AllHourData {
-            var allHourData: AllHourData = AllHourData(null, null, null)
+            var allHourData: AllHourData = AllHourData()
 
             val hourly: JSONObject = json.getJSONObject("hourly")
             val summary: String = hourly.get("summary").toString()
@@ -117,7 +117,7 @@ class GeoService {
         }
 
         fun getDaysData(json: JSONObject): AllDayData {
-            var allDayData: AllDayData = AllDayData(null, null, null)
+            var allDayData: AllDayData = AllDayData()
 
             val daily: JSONObject = json.getJSONObject("daily")
             val summary: String = daily.get("summary").toString()

@@ -13,9 +13,14 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.etien.darksky_kotlin.*
+import com.etien.darksky_kotlin.DataModels.AllDayData
+import com.etien.darksky_kotlin.DataModels.AllHourData
+import com.etien.darksky_kotlin.DataModels.AllMinuteData
 import com.etien.darksky_kotlin.DataModels.GeoCoordinates
 import com.etien.darksky_kotlin.R
 import com.etien.darksky_kotlin.Service.GeoService
@@ -23,12 +28,15 @@ import com.google.android.gms.location.*
 
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import org.json.JSONObject
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private lateinit var listView: ListView
+    private lateinit var summaryView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +45,9 @@ class MainActivity : AppCompatActivity() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()
+
+        listView = findViewById<ListView>(R.id.forecast_list_view)
+        summaryView = findViewById<TextView>(R.id.main_summary)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -126,11 +137,16 @@ class MainActivity : AppCompatActivity() {
                             val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, 0)
 
                             if(current_time_mode_index == 0) {
-                                GeoService.getMinutesData(json)
+                                val model: AllMinuteData = GeoService.getMinutesData(json)
+                                val adapter = MinutesAdapter(this@MainActivity, model.minuteList)
+                                uiThread {
+                                    summaryView.setText(model.summary)
+                                    listView.adapter = adapter
+                                }
                             } else if(current_time_mode_index == 1) {
-                                GeoService.getHoursData(json)
+                                val model: AllHourData = GeoService.getHoursData(json)
                             } else if(current_time_mode_index == 2) {
-                                GeoService.getDaysData(json)
+                                val model: AllDayData = GeoService.getDaysData(json)
                             }
 
                         }
