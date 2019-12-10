@@ -20,6 +20,8 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
+        setTitle("Réglages")
+
         val sharedPref: SharedPreferences = getSharedPreferences(
             Constants.MODE_INDEX,
             Constants.PRIVATE_MODE

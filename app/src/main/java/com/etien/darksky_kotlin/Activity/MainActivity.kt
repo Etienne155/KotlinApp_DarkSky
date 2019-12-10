@@ -13,10 +13,7 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.BaseAdapter
-import android.widget.ListView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import com.etien.darksky_kotlin.*
 import com.etien.darksky_kotlin.Adapters.DaysAdapter
@@ -38,17 +35,26 @@ class MainActivity : AppCompatActivity() {
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     private lateinit var listView: ListView
     private lateinit var summaryView: TextView
+    private lateinit var alertIcon: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        setTitle("Météo")
+
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()
 
         listView = findViewById<ListView>(R.id.forecast_list_view)
         summaryView = findViewById<TextView>(R.id.main_summary)
+        alertIcon = findViewById<ImageView>(R.id.alertIcon)
+
+        alertIcon.setOnClickListener {
+            val intent = Intent(this, AlertActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {

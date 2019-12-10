@@ -14,7 +14,7 @@
             android:textColor="@color/colorPrimary"/>
 
     <ImageView
-            android:id="@+id/rainIcon"
+            android:id="@+id/alertIcon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"

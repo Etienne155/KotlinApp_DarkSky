@@ -7,13 +7,13 @@ import android.view.Menu
 import android.view.MenuItem
 import com.etien.darksky_kotlin.R
 
-class AboutActivity : AppCompatActivity() {
+class AlertActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about)
+        setContentView(R.layout.activity_alert)
 
-        setTitle("À propos")
+        setTitle("Alertes")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
