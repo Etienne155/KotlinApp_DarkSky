@@ -1,4 +1,4 @@
-package com.etien.darksky_kotlin
+package com.etien.darksky_kotlin.Adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.etien.darksky_kotlin.DataModels.OneMinuteData
-import org.jetbrains.anko.find
+import com.etien.darksky_kotlin.R
 
 class MinutesAdapter(private val context: Context,
                      private val dataSource: MutableList<OneMinuteData>) : BaseAdapter() {
@@ -28,7 +28,7 @@ class MinutesAdapter(private val context: Context,
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        // Get view for row item
+
         val rowView = inflater.inflate(R.layout.minute_item, parent, false)
 
         val timeMinuteView: TextView = rowView.findViewById(R.id.timeMinuteView)
@@ -36,10 +36,12 @@ class MinutesAdapter(private val context: Context,
         val precipProbabilityMinuteView: TextView = rowView.findViewById(R.id.precipProbabilityMinuteView)
 
         val increment: Int = (dataSource.get(position).time!! - dataSource.get(0).time!!).div(60).toInt()
+        val precipIntensity: Double = dataSource.get(position).precipIntensity!!
+        val precipProbability: Double = dataSource.get(position).precipProbability!! * 100
 
-        timeMinuteView.setText("+ $increment minutes")
-        precipIntensityMinuteView.setText("PrecipIntensity: ${dataSource.get(position).precipIntensity}")
-        precipProbabilityMinuteView.setText("PrecipProbability: ${dataSource.get(position).precipProbability}")
+        timeMinuteView.setText("+ $increment heures")
+        precipIntensityMinuteView.setText("PrecipIntensity: " + String.format("%.2f", precipIntensity) + " mm/h")
+        precipProbabilityMinuteView.setText("PrecipProbability: " + String.format("%.1f", precipProbability) + "%")
 
         return rowView
     }

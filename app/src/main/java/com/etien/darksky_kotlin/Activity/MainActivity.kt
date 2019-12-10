@@ -18,6 +18,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.etien.darksky_kotlin.*
+import com.etien.darksky_kotlin.Adapters.DaysAdapter
+import com.etien.darksky_kotlin.Adapters.HoursAdapter
+import com.etien.darksky_kotlin.Adapters.MinutesAdapter
 import com.etien.darksky_kotlin.DataModels.AllDayData
 import com.etien.darksky_kotlin.DataModels.AllHourData
 import com.etien.darksky_kotlin.DataModels.AllMinuteData
@@ -138,15 +141,34 @@ class MainActivity : AppCompatActivity() {
 
                             if(current_time_mode_index == 0) {
                                 val model: AllMinuteData = GeoService.getMinutesData(json)
-                                val adapter = MinutesAdapter(this@MainActivity, model.minuteList)
+                                val adapter = MinutesAdapter(
+                                    this@MainActivity,
+                                    model.minuteList
+                                )
                                 uiThread {
                                     summaryView.setText(model.summary)
                                     listView.adapter = adapter
                                 }
                             } else if(current_time_mode_index == 1) {
                                 val model: AllHourData = GeoService.getHoursData(json)
+                                val adapter = HoursAdapter(
+                                    this@MainActivity,
+                                    model.hourList
+                                )
+                                uiThread {
+                                    summaryView.setText(model.summary)
+                                    listView.adapter = adapter
+                                }
                             } else if(current_time_mode_index == 2) {
                                 val model: AllDayData = GeoService.getDaysData(json)
+                                val adapter = DaysAdapter(
+                                    this@MainActivity,
+                                    model.dayList
+                                )
+                                uiThread {
+                                    summaryView.setText(model.summary)
+                                    listView.adapter = adapter
+                                }
                             }
 
                         }
