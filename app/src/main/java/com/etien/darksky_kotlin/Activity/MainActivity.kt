@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        setTitle("Météo")
+        setTitle(getString(R.string.mainTitle))
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()

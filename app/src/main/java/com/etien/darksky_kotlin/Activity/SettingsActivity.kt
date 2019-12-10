@@ -20,7 +20,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        setTitle("Réglages")
+        setTitle(getString(R.string.settingsTitle))
 
         val sharedPref: SharedPreferences = getSharedPreferences(
             Constants.MODE_INDEX,

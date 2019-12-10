@@ -13,7 +13,7 @@ class AboutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
 
-        setTitle("À propos")
+        setTitle(getString(R.string.aboutTitle))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
