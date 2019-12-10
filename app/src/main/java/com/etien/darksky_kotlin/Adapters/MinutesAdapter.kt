@@ -39,7 +39,7 @@ class MinutesAdapter(private val context: Context,
         val precipIntensity: Double = dataSource.get(position).precipIntensity!!
         val precipProbability: Double = dataSource.get(position).precipProbability!! * 100
 
-        timeMinuteView.setText("+ $increment heures")
+        timeMinuteView.setText("+ $increment minutes")
         precipIntensityMinuteView.setText("PrecipIntensity: " + String.format("%.2f", precipIntensity) + " mm/h")
         precipProbabilityMinuteView.setText("PrecipProbability: " + String.format("%.1f", precipProbability) + "%")
 

@@ -13,6 +13,7 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -21,10 +22,7 @@ import com.etien.darksky_kotlin.*
 import com.etien.darksky_kotlin.Adapters.DaysAdapter
 import com.etien.darksky_kotlin.Adapters.HoursAdapter
 import com.etien.darksky_kotlin.Adapters.MinutesAdapter
-import com.etien.darksky_kotlin.DataModels.AllDayData
-import com.etien.darksky_kotlin.DataModels.AllHourData
-import com.etien.darksky_kotlin.DataModels.AllMinuteData
-import com.etien.darksky_kotlin.DataModels.GeoCoordinates
+import com.etien.darksky_kotlin.DataModels.*
 import com.etien.darksky_kotlin.R
 import com.etien.darksky_kotlin.Service.GeoService
 import com.google.android.gms.location.*
@@ -143,7 +141,7 @@ class MainActivity : AppCompatActivity() {
                                 val model: AllMinuteData = GeoService.getMinutesData(json)
                                 val adapter = MinutesAdapter(
                                     this@MainActivity,
-                                    model.minuteList
+                                    model.list
                                 )
                                 uiThread {
                                     summaryView.setText(model.summary)
@@ -153,7 +151,7 @@ class MainActivity : AppCompatActivity() {
                                 val model: AllHourData = GeoService.getHoursData(json)
                                 val adapter = HoursAdapter(
                                     this@MainActivity,
-                                    model.hourList
+                                    model.list
                                 )
                                 uiThread {
                                     summaryView.setText(model.summary)
@@ -163,14 +161,13 @@ class MainActivity : AppCompatActivity() {
                                 val model: AllDayData = GeoService.getDaysData(json)
                                 val adapter = DaysAdapter(
                                     this@MainActivity,
-                                    model.dayList
+                                    model.list
                                 )
                                 uiThread {
                                     summaryView.setText(model.summary)
                                     listView.adapter = adapter
                                 }
                             }
-
                         }
 
                     }

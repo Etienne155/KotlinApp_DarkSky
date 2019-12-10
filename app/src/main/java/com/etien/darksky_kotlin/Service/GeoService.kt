@@ -53,7 +53,7 @@ class GeoService {
                 minuteList.add(oneMinuteData)
             }
 
-            allMinuteData.minuteList = minuteList
+            allMinuteData.list = minuteList
 
             return allMinuteData
         }
@@ -111,7 +111,7 @@ class GeoService {
                 hourList.add(oneHourData)
             }
 
-            allHourData.hourList = hourList
+            allHourData.list = hourList
 
             return allHourData
         }
@@ -169,7 +169,7 @@ class GeoService {
                 dayList.add(oneDayData)
             }
 
-            allDayData.dayList = dayList
+            allDayData.list = dayList
 
             return allDayData
         }
