@@ -119,18 +119,17 @@ class MainActivity : AppCompatActivity() {
                             val json = JSONObject(data)
 
                             val sharedPref: SharedPreferences = getSharedPreferences(
-                                Constants.TIME_MODES,
+                                Constants.MODE_INDEX,
                                 Constants.PRIVATE_MODE
                             )
-                            val time_Modes = resources.getStringArray(R.array.time_Modes)
 
-                            val time_mode = sharedPref.getString(Constants.TIME_MODES, time_Modes[0])
+                            val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, 0)
 
-                            if(time_mode == time_Modes[0]) {
+                            if(current_time_mode_index == 0) {
                                 GeoService.getMinutesData(json)
-                            } else if(time_mode == time_Modes[1]) {
+                            } else if(current_time_mode_index == 1) {
                                 GeoService.getHoursData(json)
-                            } else if(time_mode == time_Modes[2]) {
+                            } else if(current_time_mode_index == 2) {
                                 GeoService.getDaysData(json)
                             }
 

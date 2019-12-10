@@ -21,12 +21,12 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         val sharedPref: SharedPreferences = getSharedPreferences(
-            Constants.TIME_MODES,
+            Constants.MODE_INDEX,
             Constants.PRIVATE_MODE
         )
 
         val time_Modes = resources.getStringArray(R.array.time_Modes)
-        val current_time_mode = sharedPref.getString(Constants.TIME_MODES, time_Modes[0])
+        val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, 0)
 
         val spinner = findViewById<Spinner>(R.id.spinnerSettings)
 
@@ -43,7 +43,7 @@ class SettingsActivity : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
                     val editor = sharedPref.edit()
-                    editor.putString(Constants.TIME_MODES, time_Modes[position])
+                    editor.putInt(Constants.MODE_INDEX, position)
                     editor.apply()
                 }
 
@@ -51,18 +51,10 @@ class SettingsActivity : AppCompatActivity() {
 
                 }
             }
-            /* TODO */
 
-            if(current_time_mode == time_Modes[0]) {
-                spinner.setSelection(0)
-            } else if(current_time_mode == time_Modes[1]) {
-                spinner.setSelection(1)
-            } else if(current_time_mode == time_Modes[2]) {
-                spinner.setSelection(2)
-            }
+            spinner.setSelection(current_time_mode_index)
 
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
