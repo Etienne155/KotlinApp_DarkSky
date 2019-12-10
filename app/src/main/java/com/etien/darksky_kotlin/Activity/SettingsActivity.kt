@@ -34,7 +34,7 @@ class SettingsActivity : AppCompatActivity() {
 
             val adapter = ArrayAdapter(
                 this,
-                android.R.layout.simple_spinner_item, time_Modes
+                android.R.layout.simple_spinner_dropdown_item, time_Modes
             )
             spinner.adapter = adapter
 
