@@ -2,8 +2,6 @@ package com.etien.darksky_kotlin.DataModels
 
 class AllDayData() : AllData() {
     lateinit var list: MutableList<OneDayData>
-    override lateinit var summary: String
-    override lateinit var icon: String
 
     constructor(list: MutableList<OneDayData>, summary: String, icon: String) : this() {
         this.list = list
