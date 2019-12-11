@@ -16,13 +16,6 @@ class FrontActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_front)
 
-        /*
-        if (Build.VERSION.SDK_INT < 16) {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        }
-        */
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         supportActionBar?.hide()
 
@@ -30,7 +23,7 @@ class FrontActivity : AppCompatActivity() {
         handler.postDelayed(Runnable {
             val myIntent = Intent(this, MainActivity::class.java)
             startActivity(myIntent)
-        }, 5000)
+        }, 3500)
     }
 
 

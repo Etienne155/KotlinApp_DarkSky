@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.TextView
 import com.etien.darksky_kotlin.Constants
 import com.etien.darksky_kotlin.R
 
@@ -26,6 +27,18 @@ class SettingsActivity : AppCompatActivity() {
             Constants.MODE_INDEX,
             Constants.PRIVATE_MODE
         )
+
+        val latitudeView = findViewById<TextView>(R.id.latitudeView)
+        val longitudeView = findViewById<TextView>(R.id.longitudeView)
+
+        val lat = sharedPref.getFloat(Constants.LATITUDE, Constants.LATITUDE_DEFAULT)
+        var lng = sharedPref.getFloat(Constants.LONGITUDE, Constants.LONGITUDE_DEFAULT)
+
+        latitudeView.setText("$lat")
+        longitudeView.setText("$lng")
+
+
+        /* SPINNER FOR TIME MODES */
 
         val time_Modes = resources.getStringArray(R.array.time_Modes)
         val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, 0)

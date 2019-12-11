@@ -37,4 +37,9 @@
         \n- Par jour
     </string>
 
+    <string name="turn_on_location">Activer la géolocalisation</string>
+
+    <string name="latitude">Latitude actuelle :</string>
+    <string name="longitude">Longitude actuelle :</string>
+
 </resources>

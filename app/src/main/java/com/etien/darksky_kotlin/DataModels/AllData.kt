@@ -1,6 +1,6 @@
 package com.etien.darksky_kotlin.DataModels
 
-open class AllGivenData() {
+open class AllData() {
     open lateinit var summary: String
     open lateinit var icon: String
 

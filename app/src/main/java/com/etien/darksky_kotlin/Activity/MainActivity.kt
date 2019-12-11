@@ -132,16 +132,22 @@ class MainActivity : AppCompatActivity() {
                             location.longitude
                         )
 
+                        val sharedPref: SharedPreferences = getSharedPreferences(
+                            Constants.MODE_INDEX,
+                            Constants.PRIVATE_MODE
+                        )
+                        val editor = sharedPref.edit()
+                        editor.putFloat(Constants.LATITUDE, coords.lat.toFloat())
+                        editor.putFloat(Constants.LONGITUDE, coords.lng.toFloat())
+                        editor.apply()
+
+                        /* DARK SKY API */
+
                         doAsync {
                             val data = URL(Constants.URL_DARKSKY + coords.lat + "," + coords.lng).readText()
                             val json = JSONObject(data)
 
-                            val sharedPref: SharedPreferences = getSharedPreferences(
-                                Constants.MODE_INDEX,
-                                Constants.PRIVATE_MODE
-                            )
-
-                            val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, 0)
+                            val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, Constants.MODE_INDEX_DEFAULT)
 
                             if(current_time_mode_index == 0) {
                                 val model: AllMinuteData = GeoService.getMinutesData(json)
@@ -179,7 +185,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.turn_on_location), Toast.LENGTH_LONG).show()
             }
         } else {
             requestPermissions()
@@ -204,7 +210,6 @@ class MainActivity : AppCompatActivity() {
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
 
-            Toast.makeText(this@MainActivity, "callback geolocalisation", Toast.LENGTH_SHORT).show()
         }
     }
 }

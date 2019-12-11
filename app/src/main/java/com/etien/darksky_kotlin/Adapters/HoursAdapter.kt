@@ -40,8 +40,8 @@ class HoursAdapter(private val context: Context,
         val precipProbability: Double = dataSource.get(position).precipProbability!! * 100
 
         timeHourView.setText("+ $increment " + context.getString(R.string.hours))
-        precipIntensityHourView.setText(context.getString(R.string.precipIntensity) + ": " + String.format("%.2f", precipIntensity) + " mm/h")
-        precipProbabilityHourView.setText(context.getString(R.string.precipProbability) + ": " + String.format("%.1f", precipProbability) + "%")
+        precipIntensityHourView.setText(context.getString(R.string.precipIntensity) + " : " + String.format("%.2f", precipIntensity) + " mm/h")
+        precipProbabilityHourView.setText(context.getString(R.string.precipProbability) + " : " + String.format("%.0f", precipProbability) + " %")
 
         return rowView
     }

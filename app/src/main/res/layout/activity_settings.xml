@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/colorPrimary"/>
 
     <Spinner
         android:id="@+id/spinnerSettings"
@@ -19,5 +20,33 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:spinnerMode="dropdown"/>
+
+    <TextView
+            android:text="@string/latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/colorPrimary"/>
+
+    <TextView
+            android:id="@+id/latitudeView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"/>
+
+    <TextView
+            android:text="@string/longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/colorPrimary"/>
+
+    <TextView
+            android:id="@+id/longitudeView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"/>
 
 </LinearLayout>

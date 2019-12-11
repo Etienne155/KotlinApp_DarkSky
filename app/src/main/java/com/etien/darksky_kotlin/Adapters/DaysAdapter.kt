@@ -41,8 +41,8 @@ class DaysAdapter(private val context: Context,
         val precipProbability: Double = dataSource.get(position).precipProbability!! * 100
 
         timeDayView.setText("+ $increment " + context.getString(R.string.days))
-        precipIntensityDayView.setText(context.getString(R.string.precipIntensity) + ": " + String.format("%.2f", precipIntensity) + " mm/h")
-        precipProbabilityDayView.setText(context.getString(R.string.precipProbability) + ": " + String.format("%.1f", precipProbability) + "%")
+        precipIntensityDayView.setText(context.getString(R.string.precipIntensity) + " : " + String.format("%.2f", precipIntensity) + " mm/h")
+        precipProbabilityDayView.setText(context.getString(R.string.precipProbability) + " : " + String.format("%.0f", precipProbability) + " %")
 
         return rowView
     }

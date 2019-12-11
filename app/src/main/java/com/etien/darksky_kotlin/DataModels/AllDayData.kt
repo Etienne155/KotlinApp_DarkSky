@@ -1,6 +1,6 @@
 package com.etien.darksky_kotlin.DataModels
 
-class AllDayData() : AllGivenData() {
+class AllDayData() : AllData() {
     lateinit var list: MutableList<OneDayData>
     override lateinit var summary: String
     override lateinit var icon: String

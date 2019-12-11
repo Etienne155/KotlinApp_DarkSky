@@ -25,7 +25,7 @@
     <string name="mainTitle">Forecast</string>
     <string name="settingsTitle">Settings</string>
 
-    <string name="noAlert">No alert presently.</string>
+    <string name="noAlert">No alert at the moment.</string>
     <string name="chooseMode">Choose a mode :</string>
 
     <string name="aboutText">
@@ -36,5 +36,10 @@
         \n- By hour
         \n- By day
     </string>
+
+    <string name="turn_on_location">Turn on location</string>
+
+    <string name="latitude">Current latitude :</string>
+    <string name="longitude">Current longitude :</string>
 
 </resources>
