@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">DarkSky Kotlin</string>
+
+    <string name="frontTitle">DarkSky App</string>
+    <string name="frontDeveloper">Par Étienne Monette</string>
+
     <string name="action_settings">Réglages</string>
     <string name="action_about">À propos</string>
 
@@ -20,5 +24,17 @@
     <string name="alertTitle">Alertes</string>
     <string name="mainTitle">Météo</string>
     <string name="settingsTitle">Réglages</string>
+
+    <string name="noAlert">Il n\'y a pas d\'alerte en ce moment.</string>
+    <string name="chooseMode">Choisissez un mode :</string>
+
+    <string name="aboutText">
+        Cette application a été développée par Étienne Monette.
+        \n\nElle permet de consulter la météo en utilisant la géolocalisation.
+        \n\nTrois modes sont disponibles :
+        \n- Par minute
+        \n- Par heure
+        \n- Par jour
+    </string>
 
 </resources>

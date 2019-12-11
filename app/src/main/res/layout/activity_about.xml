@@ -12,7 +12,7 @@
             android:padding="30dp">
 
         <TextView
-                android:text="About"
+                android:text="@string/aboutText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18dp"/>

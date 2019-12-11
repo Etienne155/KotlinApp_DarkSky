@@ -8,7 +8,7 @@
         tools:context=".Activity.FrontActivity">
 
     <TextView
-            android:text="DarkSky App"
+            android:text="@string/frontTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/titleView"
@@ -21,7 +21,7 @@
             app:layout_constraintBottom_toTopOf="@+id/authorView"/>
 
     <TextView
-            android:text="Par Étienne Monette"
+            android:text="@string/frontDeveloper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/authorView"
