@@ -30,7 +30,7 @@
 
     <string name="aboutText">
         This application has been developed by Étienne Monette.
-        \n\nThe geolocalisation is used to fetch the forecast data.
+        \n\nThe geolocalisation is used to fetch the forecast data for your location.
         \n\nThree modes are available :
         \n- By minute
         \n- By hour

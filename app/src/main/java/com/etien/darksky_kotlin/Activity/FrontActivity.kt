@@ -7,6 +7,8 @@ import android.os.Handler
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.postDelayed
+import com.etien.darksky_kotlin.Constants
 import com.etien.darksky_kotlin.R
 
 
@@ -23,7 +25,7 @@ class FrontActivity : AppCompatActivity() {
         handler.postDelayed(Runnable {
             val myIntent = Intent(this, MainActivity::class.java)
             startActivity(myIntent)
-        }, 3500)
+        }, Constants.DELAY)
     }
 
 

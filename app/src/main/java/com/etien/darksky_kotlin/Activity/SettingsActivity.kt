@@ -21,7 +21,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        setTitle(getString(R.string.settingsTitle))
+        title = getString(R.string.settingsTitle)
 
         val sharedPref: SharedPreferences = getSharedPreferences(
             Constants.MODE_INDEX,
@@ -41,7 +41,7 @@ class SettingsActivity : AppCompatActivity() {
         /* SPINNER FOR TIME MODES */
 
         val time_Modes = resources.getStringArray(R.array.time_Modes)
-        val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, 0)
+        val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, Constants.MODE_INDEX_DEFAULT)
 
         val spinner = findViewById<Spinner>(R.id.spinnerSettings)
 

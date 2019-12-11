@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        setTitle(getString(R.string.mainTitle))
+        title = getString(R.string.mainTitle)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()
@@ -92,8 +92,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    /* Geolocalisation Utils Functions */
-
+    
     private fun checkPermissions(): Boolean {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
@@ -149,7 +148,7 @@ class MainActivity : AppCompatActivity() {
 
                             val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, Constants.MODE_INDEX_DEFAULT)
 
-                            if(current_time_mode_index == 0) {
+                            if(current_time_mode_index == Constants.MODE_MINUTE) {
                                 val model: AllMinuteData = GeoService.getMinutesData(json)
                                 val adapter = MinutesAdapter(
                                     this@MainActivity,
@@ -159,7 +158,7 @@ class MainActivity : AppCompatActivity() {
                                     summaryView.setText(model.summary)
                                     listView.adapter = adapter
                                 }
-                            } else if(current_time_mode_index == 1) {
+                            } else if(current_time_mode_index == Constants.MODE_HOUR) {
                                 val model: AllHourData = GeoService.getHoursData(json)
                                 val adapter = HoursAdapter(
                                     this@MainActivity,
@@ -169,7 +168,7 @@ class MainActivity : AppCompatActivity() {
                                     summaryView.setText(model.summary)
                                     listView.adapter = adapter
                                 }
-                            } else if(current_time_mode_index == 2) {
+                            } else if(current_time_mode_index == Constants.MODE_DAY) {
                                 val model: AllDayData = GeoService.getDaysData(json)
                                 val adapter = DaysAdapter(
                                     this@MainActivity,

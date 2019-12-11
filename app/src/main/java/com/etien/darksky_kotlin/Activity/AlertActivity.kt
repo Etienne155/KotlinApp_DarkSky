@@ -13,7 +13,7 @@ class AlertActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alert)
 
-        setTitle(getString(R.string.alertTitle))
+        title = getString(R.string.alertTitle)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
