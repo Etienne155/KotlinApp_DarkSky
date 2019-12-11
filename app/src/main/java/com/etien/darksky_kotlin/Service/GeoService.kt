@@ -19,27 +19,27 @@ class GeoService {
             var minuteList: MutableList<OneMinuteData> = mutableListOf<OneMinuteData>()
 
             val data: JSONArray = minutely.getJSONArray("data")
-            for(x in 0..25) {
+            for (x in 0..60) {
                 val item: JSONObject = data.getJSONObject(x)
                 val time: Double = item.getDouble("time")
 
                 var precipIntensity: Double = 0.0
-                if(item.has("precipIntensity")) {
+                if (item.has("precipIntensity")) {
                     precipIntensity = item.getDouble("precipIntensity")
                 }
 
                 var precipIntensityError: Double = 0.0
-                if(item.has("precipIntensityError")) {
+                if (item.has("precipIntensityError")) {
                     precipIntensityError = item.getDouble("precipIntensityError")
                 }
 
                 var precipProbability: Double = 0.0
-                if(item.has("precipProbability")) {
+                if (item.has("precipProbability")) {
                     precipProbability = item.getDouble("precipProbability")
                 }
 
                 var precipType: String = ""
-                if(item.has("precipType")) {
+                if (item.has("precipType")) {
                     precipType = item.getString("precipType")
                 }
 
@@ -48,7 +48,8 @@ class GeoService {
                     precipIntensity,
                     precipIntensityError,
                     precipProbability,
-                    precipType)
+                    precipType
+                )
 
                 minuteList.add(oneMinuteData)
             }
@@ -71,32 +72,32 @@ class GeoService {
             var hourList: MutableList<OneHourData> = mutableListOf<OneHourData>()
 
             val data: JSONArray = hourly.getJSONArray("data")
-            for(x in 0..25) {
+            for (x in 0..48) {
                 val item: JSONObject = data.getJSONObject(x)
                 val time: Double = item.getDouble("time")
 
                 var summary: String = ""
-                if(item.has("summary")) {
+                if (item.has("summary")) {
                     summary = item.getString("summary")
                 }
 
                 var icon: String = ""
-                if(item.has("icon")) {
+                if (item.has("icon")) {
                     icon = item.getString("icon")
                 }
 
                 var precipIntensity: Double = 0.0
-                if(item.has("precipIntensity")) {
+                if (item.has("precipIntensity")) {
                     precipIntensity = item.getDouble("precipIntensity")
                 }
 
                 var precipProbability: Double = 0.0
-                if(item.has("precipProbability")) {
+                if (item.has("precipProbability")) {
                     precipProbability = item.getDouble("precipProbability")
                 }
 
                 var precipType: String = ""
-                if(item.has("precipType")) {
+                if (item.has("precipType")) {
                     precipType = item.getString("precipType")
                 }
 
@@ -106,7 +107,8 @@ class GeoService {
                     icon,
                     precipIntensity,
                     precipProbability,
-                    precipType)
+                    precipType
+                )
 
                 hourList.add(oneHourData)
             }
@@ -129,32 +131,32 @@ class GeoService {
             var dayList: MutableList<OneDayData> = mutableListOf<OneDayData>()
 
             val data: JSONArray = daily.getJSONArray("data")
-            for(x in 0..7) {
+            for (x in 0..7) {
                 val item: JSONObject = data.getJSONObject(x)
                 val time: Double = item.getDouble("time")
 
                 var summary: String = ""
-                if(item.has("summary")) {
+                if (item.has("summary")) {
                     summary = item.getString("summary")
                 }
 
                 var icon: String = ""
-                if(item.has("icon")) {
+                if (item.has("icon")) {
                     icon = item.getString("icon")
                 }
 
                 var precipIntensity: Double = 0.0
-                if(item.has("precipIntensity")) {
+                if (item.has("precipIntensity")) {
                     precipIntensity = item.getDouble("precipIntensity")
                 }
 
                 var precipProbability: Double = 0.0
-                if(item.has("precipProbability")) {
+                if (item.has("precipProbability")) {
                     precipProbability = item.getDouble("precipProbability")
                 }
 
                 var precipType: String = ""
-                if(item.has("precipType")) {
+                if (item.has("precipType")) {
                     precipType = item.getString("precipType")
                 }
 
@@ -164,7 +166,8 @@ class GeoService {
                     icon,
                     precipIntensity,
                     precipProbability,
-                    precipType)
+                    precipType
+                )
 
                 dayList.add(oneDayData)
             }
@@ -172,6 +175,21 @@ class GeoService {
             allDayData.list = dayList
 
             return allDayData
+        }
+
+        fun getAlert(json: JSONObject): AlertData {
+            val alerts: JSONArray = json.getJSONArray("alerts")
+            val firstAlert: JSONObject = alerts.getJSONObject(0)
+
+            val title: String = firstAlert.getString("title")
+            val severity: String = firstAlert.getString("severity")
+            val time: Double = firstAlert.getDouble("time")
+            val expires: Double = firstAlert.getDouble("expires")
+            val description: String = firstAlert.getString("description")
+
+            val alertData: AlertData = AlertData(title, severity, time, expires, description)
+
+            return alertData
         }
     }
 }

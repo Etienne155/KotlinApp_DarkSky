@@ -24,7 +24,7 @@ class SettingsActivity : AppCompatActivity() {
         title = getString(R.string.settingsTitle)
 
         val sharedPref: SharedPreferences = getSharedPreferences(
-            Constants.MODE_INDEX,
+            Constants.PREFERENCE_NAME,
             Constants.PRIVATE_MODE
         )
 
@@ -34,8 +34,8 @@ class SettingsActivity : AppCompatActivity() {
         val lat = sharedPref.getFloat(Constants.LATITUDE, Constants.LATITUDE_DEFAULT)
         var lng = sharedPref.getFloat(Constants.LONGITUDE, Constants.LONGITUDE_DEFAULT)
 
-        latitudeView.setText("$lat")
-        longitudeView.setText("$lng")
+        latitudeView.setText(String.format("%.2f", lat))
+        longitudeView.setText(String.format("%.2f", lng))
 
 
         /* SPINNER FOR TIME MODES */

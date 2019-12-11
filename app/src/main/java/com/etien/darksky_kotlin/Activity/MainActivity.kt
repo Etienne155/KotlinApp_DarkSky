@@ -13,6 +13,7 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import com.etien.darksky_kotlin.*
@@ -28,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.json.JSONObject
+import java.lang.Exception
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
@@ -132,7 +134,7 @@ class MainActivity : AppCompatActivity() {
                         )
 
                         val sharedPref: SharedPreferences = getSharedPreferences(
-                            Constants.MODE_INDEX,
+                            Constants.PREFERENCE_NAME,
                             Constants.PRIVATE_MODE
                         )
                         val editor = sharedPref.edit()
@@ -149,38 +151,52 @@ class MainActivity : AppCompatActivity() {
                             val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, Constants.MODE_INDEX_DEFAULT)
 
                             if(current_time_mode_index == Constants.MODE_MINUTE) {
-                                val model: AllMinuteData = GeoService.getMinutesData(json)
-                                val adapter = MinutesAdapter(
-                                    this@MainActivity,
-                                    model.list
-                                )
-                                uiThread {
-                                    summaryView.setText(model.summary)
-                                    listView.adapter = adapter
+                                try {
+                                    var model = GeoService.getMinutesData(json)
+                                    val adapter = MinutesAdapter(
+                                        this@MainActivity,
+                                        model.list
+                                    )
+                                    uiThread {
+                                        summaryView.setText(model.summary)
+                                        listView.adapter = adapter
+                                    }
+                                } catch (e: Exception) {
+                                    summaryView.setText(getString(R.string.noDataAvailable))
+                                    alertIcon.visibility = View.GONE
                                 }
                             } else if(current_time_mode_index == Constants.MODE_HOUR) {
-                                val model: AllHourData = GeoService.getHoursData(json)
-                                val adapter = HoursAdapter(
-                                    this@MainActivity,
-                                    model.list
-                                )
-                                uiThread {
-                                    summaryView.setText(model.summary)
-                                    listView.adapter = adapter
+                                try {
+                                    var model = GeoService.getHoursData(json)
+                                    val adapter = HoursAdapter(
+                                        this@MainActivity,
+                                        model.list
+                                    )
+                                    uiThread {
+                                        summaryView.setText(model.summary)
+                                        listView.adapter = adapter
+                                    }
+                                } catch (e: Exception) {
+                                    summaryView.setText(getString(R.string.noDataAvailable))
+                                    alertIcon.visibility = View.GONE
                                 }
                             } else if(current_time_mode_index == Constants.MODE_DAY) {
-                                val model: AllDayData = GeoService.getDaysData(json)
-                                val adapter = DaysAdapter(
-                                    this@MainActivity,
-                                    model.list
-                                )
-                                uiThread {
-                                    summaryView.setText(model.summary)
-                                    listView.adapter = adapter
+                                try {
+                                    var model = GeoService.getDaysData(json)
+                                    val adapter = DaysAdapter(
+                                        this@MainActivity,
+                                        model.list
+                                    )
+                                    uiThread {
+                                        summaryView.setText(model.summary)
+                                        listView.adapter = adapter
+                                    }
+                                } catch (e: Exception) {
+                                    summaryView.setText(getString(R.string.noDataAvailable))
+                                    alertIcon.visibility = View.GONE
                                 }
                             }
                         }
-
                     }
                 }
             } else {

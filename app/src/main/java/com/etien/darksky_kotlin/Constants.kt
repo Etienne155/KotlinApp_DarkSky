@@ -2,9 +2,10 @@ package com.etien.darksky_kotlin
 
 class Constants {
     companion object {
-        const val DELAY: Long = 2500
+        const val DELAY: Long = 3000
 
         const val PRIVATE_MODE = 0
+        const val PREFERENCE_NAME = "DARK_SKY_PREFS"
 
         const val MODE_INDEX = "MODE_INDEX"
         const val MODE_INDEX_DEFAULT = 2

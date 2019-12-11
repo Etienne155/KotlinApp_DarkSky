@@ -25,7 +25,6 @@
     <string name="mainTitle">Météo</string>
     <string name="settingsTitle">Réglages</string>
 
-    <string name="noAlert">Il n\'y a pas d\'alerte en ce moment.</string>
     <string name="chooseMode">Choisissez un mode :</string>
 
     <string name="aboutText">
@@ -41,5 +40,10 @@
 
     <string name="latitude">Latitude actuelle :</string>
     <string name="longitude">Longitude actuelle :</string>
+
+    <string name="alertSeverity">Sévérité</string>
+    <string name="noAlert">Il n\'y a pas d\'alerte en ce moment.</string>
+
+    <string name="noDataAvailable">Les données sont non disponibles.</string>
 
 </resources>

@@ -16,12 +16,14 @@
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/precipIntensityDayView"/>
+            android:id="@+id/precipIntensityDayView"
+            android:layout_marginLeft="40dp"/>
 
     <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/precipProbabilityDayView"/>
+            android:id="@+id/precipProbabilityDayView"
+            android:layout_marginLeft="40dp"/>
 
 </LinearLayout>

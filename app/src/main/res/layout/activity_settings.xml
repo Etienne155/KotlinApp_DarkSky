@@ -33,7 +33,9 @@
             android:id="@+id/latitudeView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="6dp"/>
 
     <TextView
             android:text="@string/longitude"
@@ -47,6 +49,8 @@
             android:id="@+id/longitudeView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="6dp"/>
 
 </LinearLayout>
