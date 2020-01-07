@@ -13,12 +13,12 @@
         <item>Day</item>
     </string-array>
 
-    <string name="days">days</string>
-    <string name="hours">hours</string>
-    <string name="minutes">minutes</string>
+    <string name="days">+ %1$d days</string>
+    <string name="hours">+ %1$d hours</string>
+    <string name="minutes">+ %1$d minutes</string>
 
-    <string name="precipIntensity">Precipitation</string>
-    <string name="precipProbability">Probability</string>
+    <string name="precipIntensity">Précipitation : %1$s mm/h %2$s</string>
+    <string name="precipProbability">Probabilité : %1$s %%</string>
 
     <string name="aboutTitle">About</string>
     <string name="alertTitle">Alerts</string>
@@ -40,6 +40,9 @@
 
     <string name="latitude">Current latitude :</string>
     <string name="longitude">Current longitude :</string>
+
+    <string name="latitudeVal">%1$s°</string>
+    <string name="longitudeVal">%1$s°</string>
 
     <string name="alertSeverity">Severity</string>
     <string name="noAlert">No alert at the moment.</string>

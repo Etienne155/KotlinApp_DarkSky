@@ -2,7 +2,6 @@ package com.etien.darksky_kotlin.Activity
 
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,8 +10,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.etien.darksky_kotlin.Constants
 import com.etien.darksky_kotlin.R
+
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -32,10 +33,10 @@ class SettingsActivity : AppCompatActivity() {
         val longitudeView = findViewById<TextView>(R.id.longitudeView)
 
         val lat = sharedPref.getFloat(Constants.LATITUDE, Constants.LATITUDE_DEFAULT)
-        var lng = sharedPref.getFloat(Constants.LONGITUDE, Constants.LONGITUDE_DEFAULT)
+        val lng = sharedPref.getFloat(Constants.LONGITUDE, Constants.LONGITUDE_DEFAULT)
 
-        latitudeView.setText(String.format("%.2f", lat))
-        longitudeView.setText(String.format("%.2f", lng))
+        latitudeView.setText(getString(R.string.latitudeVal, String.format("%.2f", lat)))
+        longitudeView.setText(getString(R.string.longitudeVal, String.format("%.2f", lng)))
 
 
         /* SPINNER FOR TIME MODES */

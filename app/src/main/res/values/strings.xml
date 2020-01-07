@@ -13,12 +13,12 @@
         <item>Jour</item>
     </string-array>
 
-    <string name="days">jours</string>
-    <string name="hours">heures</string>
-    <string name="minutes">minutes</string>
+    <string name="days">+ %1$d jours</string>
+    <string name="hours">+ %1$d heures</string>
+    <string name="minutes">+ %1$d minutes</string>
 
-    <string name="precipIntensity">Précipitation</string>
-    <string name="precipProbability">Probabilité</string>
+    <string name="precipIntensity">Précipitation : %1$s mm/h %2$s</string>
+    <string name="precipProbability">Probabilité : %1$s %%</string>
     
     <string name="aboutTitle">À propos</string>
     <string name="alertTitle">Alertes</string>
@@ -40,6 +40,9 @@
 
     <string name="latitude">Latitude actuelle :</string>
     <string name="longitude">Longitude actuelle :</string>
+
+    <string name="latitudeVal">%1$s°</string>
+    <string name="longitudeVal">%1$s°</string>
 
     <string name="alertSeverity">Sévérité</string>
     <string name="noAlert">Il n\'y a pas d\'alerte en ce moment.</string>
