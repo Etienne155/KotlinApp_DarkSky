@@ -5,8 +5,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class GeoService {
-    companion object {
-        fun getMinutesData(json: JSONObject): AllMinuteData {
+    companion object : GeoInterface {
+        override fun getMinutesData(json: JSONObject): AllMinuteData {
             val allMinuteData = AllMinuteData()
 
             val minutely: JSONObject = json.getJSONObject("minutely")
@@ -59,7 +59,7 @@ class GeoService {
             return allMinuteData
         }
 
-        fun getHoursData(json: JSONObject): AllHourData {
+        override fun getHoursData(json: JSONObject): AllHourData {
             val allHourData = AllHourData()
 
             val hourly: JSONObject = json.getJSONObject("hourly")
@@ -118,7 +118,7 @@ class GeoService {
             return allHourData
         }
 
-        fun getDaysData(json: JSONObject): AllDayData {
+        override fun getDaysData(json: JSONObject): AllDayData {
             val allDayData = AllDayData()
 
             val daily: JSONObject = json.getJSONObject("daily")
@@ -177,7 +177,7 @@ class GeoService {
             return allDayData
         }
 
-        fun getAlert(json: JSONObject): AlertData {
+        override fun getAlert(json: JSONObject): AlertData {
             val alerts: JSONArray = json.getJSONArray("alerts")
             val firstAlert: JSONObject = alerts.getJSONObject(0)
 
