@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.TextView
 import com.etien.darksky_kotlin.DataModels.OneMinuteData
 import com.etien.darksky_kotlin.R
+import kotlinx.android.synthetic.main.minute_item.view.*
 
 class MinutesAdapter(private val context: Context,
                      private val dataSource: MutableList<OneMinuteData>) : BaseAdapter() {
@@ -31,10 +31,6 @@ class MinutesAdapter(private val context: Context,
 
         val rowView = inflater.inflate(R.layout.minute_item, parent, false)
 
-        val timeMinuteView: TextView = rowView.findViewById(R.id.timeMinuteView)
-        val precipIntensityMinuteView: TextView = rowView.findViewById(R.id.precipIntensityMinuteView)
-        val precipProbabilityMinuteView: TextView = rowView.findViewById(R.id.precipProbabilityMinuteView)
-
         val actualTime: Double? = dataSource.get(position)?.time
         val firstTime: Double? = dataSource.get(0)?.time
         val increment: Int? = (firstTime?.let { actualTime?.minus(it) })?.div(60)?.toInt()
@@ -48,9 +44,9 @@ class MinutesAdapter(private val context: Context,
             precipType = " - $precipTypeVal"
         }
 
-        timeMinuteView.setText(context.getString(R.string.minutes, increment))
-        precipIntensityMinuteView.setText(context.getString(R.string.precipIntensity, String.format("%.2f", precipIntensity), precipType))
-        precipProbabilityMinuteView.setText(context.getString(R.string.precipProbability, String.format("%.0f", precipProbability)))
+        rowView.timeMinuteView.setText(context.getString(R.string.minutes, increment))
+        rowView.precipIntensityMinuteView.setText(context.getString(R.string.precipIntensity, String.format("%.2f", precipIntensity), precipType))
+        rowView.precipProbabilityMinuteView.setText(context.getString(R.string.precipProbability, String.format("%.0f", precipProbability)))
 
         return rowView
     }

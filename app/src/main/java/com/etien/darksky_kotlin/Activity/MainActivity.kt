@@ -13,9 +13,6 @@ import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -27,6 +24,7 @@ import com.etien.darksky_kotlin.R
 import com.etien.darksky_kotlin.Service.GeoService
 import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.json.JSONObject
@@ -35,9 +33,6 @@ import java.net.URL
 class MainActivity : AppCompatActivity() {
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
-    private lateinit var listView: ListView
-    private lateinit var summaryView: TextView
-    private lateinit var alertIcon: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,14 +42,11 @@ class MainActivity : AppCompatActivity() {
         title = getString(R.string.mainTitle)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         getLastLocation()
         getDarkSkyData()
 
-        listView = findViewById<ListView>(R.id.forecast_list_view)
-        summaryView = findViewById<TextView>(R.id.main_summary)
-        alertIcon = findViewById<ImageView>(R.id.alertIcon)
-
-        alertIcon.setOnClickListener {
+        alertIconView.setOnClickListener {
             val intent = Intent(this, AlertActivity::class.java)
             startActivity(intent)
         }
@@ -141,13 +133,14 @@ class MainActivity : AppCompatActivity() {
                         model.list
                     )
                     uiThread {
-                        summaryView.setText(model.summary)
-                        listView.adapter = adapter
+                        mainSummaryView.setText(model.summary)
+                        forecastListView.adapter = adapter
                     }
                 } catch (e: Exception) {
-                    summaryView.setText(getString(R.string.noDataAvailable))
-                    alertIcon.visibility = View.GONE
+                    mainSummaryView.setText(getString(R.string.noDataAvailable))
+                    alertIconView.visibility = View.GONE
                 }
+
             } else if(current_time_mode_index == Constants.MODE_HOUR) {
                 try {
                     var model = GeoService.getHoursData(json)
@@ -156,13 +149,14 @@ class MainActivity : AppCompatActivity() {
                         model.list
                     )
                     uiThread {
-                        summaryView.setText(model.summary)
-                        listView.adapter = adapter
+                        mainSummaryView.setText(model.summary)
+                        forecastListView.adapter = adapter
                     }
                 } catch (e: Exception) {
-                    summaryView.setText(getString(R.string.noDataAvailable))
-                    alertIcon.visibility = View.GONE
+                    mainSummaryView.setText(getString(R.string.noDataAvailable))
+                    alertIconView.visibility = View.GONE
                 }
+
             } else if(current_time_mode_index == Constants.MODE_DAY) {
                 try {
                     var model = GeoService.getDaysData(json)
@@ -171,12 +165,12 @@ class MainActivity : AppCompatActivity() {
                         model.list
                     )
                     uiThread {
-                        summaryView.setText(model.summary)
-                        listView.adapter = adapter
+                        mainSummaryView.setText(model.summary)
+                        forecastListView.adapter = adapter
                     }
                 } catch (e: Exception) {
-                    summaryView.setText(getString(R.string.noDataAvailable))
-                    alertIcon.visibility = View.GONE
+                    mainSummaryView.setText(getString(R.string.noDataAvailable))
+                    alertIconView.visibility = View.GONE
                 }
             }
         }

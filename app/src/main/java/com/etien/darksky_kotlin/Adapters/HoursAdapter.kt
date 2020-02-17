@@ -8,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.etien.darksky_kotlin.DataModels.OneHourData
 import com.etien.darksky_kotlin.R
+import kotlinx.android.synthetic.main.hour_item.view.*
 
 class HoursAdapter(private val context: Context,
                    private val dataSource: MutableList<OneHourData>) : BaseAdapter() {
@@ -31,10 +32,6 @@ class HoursAdapter(private val context: Context,
 
         val rowView = inflater.inflate(R.layout.hour_item, parent, false)
 
-        val timeHourView: TextView = rowView.findViewById(R.id.timeHourView)
-        val precipIntensityHourView: TextView = rowView.findViewById(R.id.precipIntensityHourView)
-        val precipProbabilityHourView: TextView = rowView.findViewById(R.id.precipProbabilityHourView)
-
         val actualTime: Double? = dataSource.get(position)?.time
         val firstTime: Double? = dataSource.get(0)?.time
         val increment: Int? = (firstTime?.let { actualTime?.minus(it) })?.div(60 * 60)?.toInt()
@@ -48,9 +45,9 @@ class HoursAdapter(private val context: Context,
             precipType = " - $precipTypeVal"
         }
 
-        timeHourView.setText(context.getString(R.string.hours, increment))
-        precipIntensityHourView.setText(context.getString(R.string.precipIntensity, String.format("%.2f", precipIntensity), precipType))
-        precipProbabilityHourView.setText(context.getString(R.string.precipProbability, String.format("%.0f", precipProbability)))
+        rowView.timeHourView.setText(context.getString(R.string.hours, increment))
+        rowView.precipIntensityHourView.setText(context.getString(R.string.precipIntensity, String.format("%.2f", precipIntensity), precipType))
+        rowView.precipProbabilityHourView.setText(context.getString(R.string.precipProbability, String.format("%.0f", precipProbability)))
 
         return rowView
     }

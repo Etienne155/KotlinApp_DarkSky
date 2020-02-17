@@ -9,10 +9,10 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.etien.darksky_kotlin.Constants
 import com.etien.darksky_kotlin.R
+import kotlinx.android.synthetic.main.activity_settings.*
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -29,9 +29,6 @@ class SettingsActivity : AppCompatActivity() {
             Constants.PRIVATE_MODE
         )
 
-        val latitudeView = findViewById<TextView>(R.id.latitudeView)
-        val longitudeView = findViewById<TextView>(R.id.longitudeView)
-
         val lat = sharedPref.getFloat(Constants.LATITUDE, Constants.LATITUDE_DEFAULT)
         val lng = sharedPref.getFloat(Constants.LONGITUDE, Constants.LONGITUDE_DEFAULT)
 
@@ -44,17 +41,15 @@ class SettingsActivity : AppCompatActivity() {
         val time_Modes = resources.getStringArray(R.array.time_Modes)
         val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, Constants.MODE_INDEX_DEFAULT)
 
-        val spinner = findViewById<Spinner>(R.id.spinnerSettings)
-
-        if (spinner != null) {
+        if (spinnerSettingsView != null) {
 
             val adapter = ArrayAdapter(
                 this,
                 android.R.layout.simple_spinner_dropdown_item, time_Modes
             )
-            spinner.adapter = adapter
+            spinnerSettingsView.adapter = adapter
 
-            spinner.onItemSelectedListener = object :
+            spinnerSettingsView.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
@@ -68,7 +63,7 @@ class SettingsActivity : AppCompatActivity() {
                 }
             }
 
-            spinner.setSelection(current_time_mode_index)
+            spinnerSettingsView.setSelection(current_time_mode_index)
 
         }
     }

@@ -15,7 +15,7 @@
         android:textColor="@color/colorPrimary"/>
 
     <Spinner
-        android:id="@+id/spinnerSettings"
+        android:id="@+id/spinnerSettingsView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"

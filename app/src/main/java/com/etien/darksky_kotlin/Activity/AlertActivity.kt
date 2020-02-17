@@ -2,18 +2,17 @@ package com.etien.darksky_kotlin.Activity
 
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.etien.darksky_kotlin.Constants
 import com.etien.darksky_kotlin.R
 import com.etien.darksky_kotlin.Service.GeoService
+import kotlinx.android.synthetic.main.activity_alert.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.json.JSONObject
-import java.lang.Exception
 import java.net.URL
 
 class AlertActivity : AppCompatActivity() {
@@ -23,10 +22,6 @@ class AlertActivity : AppCompatActivity() {
         setContentView(R.layout.activity_alert)
 
         title = getString(R.string.alertTitle)
-
-        val alertTitleView: TextView = findViewById(R.id.alertTitleView)
-        val alertSeverityView: TextView = findViewById(R.id.alertSeverityView)
-        val alertDescriptionView: TextView = findViewById(R.id.alertDescriptionView)
 
         val sharedPref: SharedPreferences = getSharedPreferences(
             Constants.PREFERENCE_NAME,

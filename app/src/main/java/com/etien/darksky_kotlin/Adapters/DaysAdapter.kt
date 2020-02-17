@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.TextView
 import com.etien.darksky_kotlin.DataModels.OneDayData
-import com.etien.darksky_kotlin.DataModels.OneHourData
 import com.etien.darksky_kotlin.R
+import kotlinx.android.synthetic.main.day_item.view.*
 
 class DaysAdapter(private val context: Context,
                   private val dataSource: MutableList<OneDayData>) : BaseAdapter() {
@@ -32,10 +31,6 @@ class DaysAdapter(private val context: Context,
 
         val rowView = inflater.inflate(R.layout.day_item, parent, false)
 
-        val timeDayView: TextView = rowView.findViewById(R.id.timeDayView)
-        val precipIntensityDayView: TextView = rowView.findViewById(R.id.precipIntensityDayView)
-        val precipProbabilityDayView: TextView = rowView.findViewById(R.id.precipProbabilityDayView)
-
         val actualTime: Double? = dataSource.get(position)?.time
         val firstTime: Double? = dataSource.get(0)?.time
         val increment: Int? = (firstTime?.let { actualTime?.minus(it) })?.div(60 * 60 * 24)?.toInt()
@@ -49,9 +44,9 @@ class DaysAdapter(private val context: Context,
             precipType = " - $precipTypeVal"
         }
 
-        timeDayView.setText(context.getString(R.string.days, increment))
-        precipIntensityDayView.setText(context.getString(R.string.precipIntensity, String.format("%.2f", precipIntensity), precipType))
-        precipProbabilityDayView.setText(context.getString(R.string.precipProbability, String.format("%.0f", precipProbability)))
+        rowView.timeDayView.setText(context.getString(R.string.days, increment))
+        rowView.precipIntensityDayView.setText(context.getString(R.string.precipIntensity, String.format("%.2f", precipIntensity), precipType))
+        rowView.precipProbabilityDayView.setText(context.getString(R.string.precipProbability, String.format("%.0f", precipProbability)))
 
         return rowView
     }
