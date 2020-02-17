@@ -35,12 +35,16 @@ class HoursAdapter(private val context: Context,
         val precipIntensityHourView: TextView = rowView.findViewById(R.id.precipIntensityHourView)
         val precipProbabilityHourView: TextView = rowView.findViewById(R.id.precipProbabilityHourView)
 
-        val increment: Int = (dataSource.get(position).time!! - dataSource.get(0).time!!).div(60 * 60).toInt()
-        val precipIntensity: Double = dataSource.get(position).precipIntensity!!
-        val precipProbability: Double = dataSource.get(position).precipProbability!! * 100
-        val precipTypeVal: String = dataSource.get(position).precipType!!
+        val actualTime: Double? = dataSource.get(position)?.time
+        val firstTime: Double? = dataSource.get(0)?.time
+        val increment: Int? = (firstTime?.let { actualTime?.minus(it) })?.div(60 * 60)?.toInt()
+
+        val precipIntensity: Double? = dataSource.get(position)?.precipIntensity
+        val precipProbability: Double? = dataSource.get(position)?.precipProbability?.times(100)
+
+        val precipTypeVal: String? = dataSource.get(position)?.precipType
         var precipType = ""
-        if(precipTypeVal.isNotEmpty()) {
+        if(!precipTypeVal.isNullOrEmpty()) {
             precipType = " - $precipTypeVal"
         }
 
