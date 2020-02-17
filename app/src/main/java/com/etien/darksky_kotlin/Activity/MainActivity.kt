@@ -10,26 +10,26 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.ImageView
+import android.widget.ListView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.etien.darksky_kotlin.*
 import com.etien.darksky_kotlin.Adapters.DaysAdapter
 import com.etien.darksky_kotlin.Adapters.HoursAdapter
 import com.etien.darksky_kotlin.Adapters.MinutesAdapter
-import com.etien.darksky_kotlin.DataModels.*
+import com.etien.darksky_kotlin.Constants
 import com.etien.darksky_kotlin.R
 import com.etien.darksky_kotlin.Service.GeoService
 import com.google.android.gms.location.*
-
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.json.JSONObject
-import java.lang.Exception
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()
+        getDarkSkyData()
 
         listView = findViewById<ListView>(R.id.forecast_list_view)
         summaryView = findViewById<TextView>(R.id.main_summary)
@@ -118,6 +119,69 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    private fun getDarkSkyData() {
+        doAsync {
+            val sharedPref: SharedPreferences = getSharedPreferences(
+                Constants.PREFERENCE_NAME,
+                Constants.PRIVATE_MODE
+            )
+
+            val lat = sharedPref.getFloat(Constants.LATITUDE, Constants.LATITUDE_DEFAULT)
+            val lng = sharedPref.getFloat(Constants.LONGITUDE, Constants.LONGITUDE_DEFAULT)
+            val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, Constants.MODE_INDEX_DEFAULT)
+
+            val data = URL(Constants.URL_DARKSKY + lat + "," + lng).readText()
+            val json = JSONObject(data)
+
+            if(current_time_mode_index == Constants.MODE_MINUTE) {
+                try {
+                    var model = GeoService.getMinutesData(json)
+                    val adapter = MinutesAdapter(
+                        this@MainActivity,
+                        model.list
+                    )
+                    uiThread {
+                        summaryView.setText(model.summary)
+                        listView.adapter = adapter
+                    }
+                } catch (e: Exception) {
+                    summaryView.setText(getString(R.string.noDataAvailable))
+                    alertIcon.visibility = View.GONE
+                }
+            } else if(current_time_mode_index == Constants.MODE_HOUR) {
+                try {
+                    var model = GeoService.getHoursData(json)
+                    val adapter = HoursAdapter(
+                        this@MainActivity,
+                        model.list
+                    )
+                    uiThread {
+                        summaryView.setText(model.summary)
+                        listView.adapter = adapter
+                    }
+                } catch (e: Exception) {
+                    summaryView.setText(getString(R.string.noDataAvailable))
+                    alertIcon.visibility = View.GONE
+                }
+            } else if(current_time_mode_index == Constants.MODE_DAY) {
+                try {
+                    var model = GeoService.getDaysData(json)
+                    val adapter = DaysAdapter(
+                        this@MainActivity,
+                        model.list
+                    )
+                    uiThread {
+                        summaryView.setText(model.summary)
+                        listView.adapter = adapter
+                    }
+                } catch (e: Exception) {
+                    summaryView.setText(getString(R.string.noDataAvailable))
+                    alertIcon.visibility = View.GONE
+                }
+            }
+        }
+    }
+
     @SuppressLint("MissingPermission")
     private fun getLastLocation() {
         if (checkPermissions()) {
@@ -128,75 +192,16 @@ class MainActivity : AppCompatActivity() {
                     if (location == null) {
                         requestNewLocationData()
                     } else {
-                        var coords = GeoCoordinates(
-                            location.latitude,
-                            location.longitude
-                        )
 
                         val sharedPref: SharedPreferences = getSharedPreferences(
                             Constants.PREFERENCE_NAME,
                             Constants.PRIVATE_MODE
                         )
+
                         val editor = sharedPref.edit()
-                        editor.putFloat(Constants.LATITUDE, coords.lat.toFloat())
-                        editor.putFloat(Constants.LONGITUDE, coords.lng.toFloat())
+                        editor.putFloat(Constants.LATITUDE, location.latitude.toFloat())
+                        editor.putFloat(Constants.LONGITUDE, location.longitude.toFloat())
                         editor.apply()
-
-                        /* DARK SKY API */
-
-                        doAsync {
-                            val data = URL(Constants.URL_DARKSKY + coords.lat + "," + coords.lng).readText()
-                            val json = JSONObject(data)
-
-                            val current_time_mode_index = sharedPref.getInt(Constants.MODE_INDEX, Constants.MODE_INDEX_DEFAULT)
-
-                            if(current_time_mode_index == Constants.MODE_MINUTE) {
-                                try {
-                                    var model = GeoService.getMinutesData(json)
-                                    val adapter = MinutesAdapter(
-                                        this@MainActivity,
-                                        model.list
-                                    )
-                                    uiThread {
-                                        summaryView.setText(model.summary)
-                                        listView.adapter = adapter
-                                    }
-                                } catch (e: Exception) {
-                                    summaryView.setText(getString(R.string.noDataAvailable))
-                                    alertIcon.visibility = View.GONE
-                                }
-                            } else if(current_time_mode_index == Constants.MODE_HOUR) {
-                                try {
-                                    var model = GeoService.getHoursData(json)
-                                    val adapter = HoursAdapter(
-                                        this@MainActivity,
-                                        model.list
-                                    )
-                                    uiThread {
-                                        summaryView.setText(model.summary)
-                                        listView.adapter = adapter
-                                    }
-                                } catch (e: Exception) {
-                                    summaryView.setText(getString(R.string.noDataAvailable))
-                                    alertIcon.visibility = View.GONE
-                                }
-                            } else if(current_time_mode_index == Constants.MODE_DAY) {
-                                try {
-                                    var model = GeoService.getDaysData(json)
-                                    val adapter = DaysAdapter(
-                                        this@MainActivity,
-                                        model.list
-                                    )
-                                    uiThread {
-                                        summaryView.setText(model.summary)
-                                        listView.adapter = adapter
-                                    }
-                                } catch (e: Exception) {
-                                    summaryView.setText(getString(R.string.noDataAvailable))
-                                    alertIcon.visibility = View.GONE
-                                }
-                            }
-                        }
                     }
                 }
             } else {
